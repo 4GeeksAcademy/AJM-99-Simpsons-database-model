@@ -25,8 +25,8 @@ class User(db.Model):
     lastname: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
     email: Mapped[str] = mapped_column(String(120), nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    fav_characters: Mapped[list["Character"]] = relationship(secondary="favorite_characters",back_populates="likes_character")
-    fav_locations: Mapped[list["Location"]] = relationship(secondary="favorite_locations", back_populates="likes_locations")
+    fav_characters: Mapped[list["Character"]] = relationship(secondary="favorite_characters",back_populates="users_fav")
+    fav_locations: Mapped[list["Location"]] = relationship(secondary="favorite_locations", back_populates="users_fav")
     
 
     def serialize(self):
@@ -45,7 +45,7 @@ class Character(db.Model):
         name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
         quote: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
         image: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
-        users_fav: Mapped[list["User"]] = relationship(secondary="favorite_characters",back_populates="likes_character")
+        users_fav: Mapped[list["User"]] = relationship(secondary="favorite_characters",back_populates="fav_characters")
         
         def serialize(self):
             return {
@@ -61,7 +61,7 @@ class Location(db.Model):
         name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
         description: Mapped[str] = mapped_column(String(200), unique=False, nullable=False)
         image: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
-        users_fav: Mapped[list["User"]] = relationship(secondary="favorite_locations",back_populates="likes_location")
+        users_fav: Mapped[list["User"]] = relationship(secondary="favorite_locations",back_populates="fav_locations")
         
         def serialize(self):
             return {

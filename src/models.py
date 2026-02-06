@@ -25,7 +25,7 @@ class User(db.Model):
     lastname: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
     email: Mapped[str] = mapped_column(String(120), nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    fav_characters: Mapped[list["Character"]] = relationship(secondary="favorite_locatios",back_populates="likes_character")
+    fav_characters: Mapped[list["Character"]] = relationship(secondary="favorite_characters",back_populates="likes_character")
     fav_locations: Mapped[list["Location"]] = relationship(secondary="favorite_locations", back_populates="likes_locations")
     
 

@@ -34,6 +34,10 @@ app.register_blueprint(api, url_prefix='/api')
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+# generate sitemap with all your endpoints
+@app.route('/')
+def sitemap():
+    return generate_sitemap(app)
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ favorite_characters = Table(
     Column("character_id", ForeignKey("character.id"))
 )
 
-fav = Table(
+favorite_locations = Table(
     "favorite_locations",
     db.metadata,
     Column("user_id", ForeignKey("user.id")),
@@ -36,8 +36,8 @@ class User(db.Model):
             "firstname": self.firstname,
             "lastname": self.lastname,
             "email": self.email,
-            "favorite_characters": (character.serialize() for character in self.fav_characters),
-            "favorite_locations": (location.serializze() for location in self.fav_locations)
+            "favorite_characters": [character.name for character in self.fav_characters],
+            "favorite_locations": [location.name for location in self.fav_locations]
         }  
 
 class Character(db.Model):
@@ -53,7 +53,7 @@ class Character(db.Model):
                 "name": self.name,
                 "quote": self.quote,
                 "image_url": self.image,
-                "favorite_of_users": (user.username for user in self.users_fav)
+                "favorite_of_users": [user.username for user in self.users_fav]
             }
 
 class Location(db.Model):
@@ -69,5 +69,5 @@ class Location(db.Model):
                 "name": self.name,
                 "description": self.description,
                 "image_url": self.image,
-                "favorite_of_users": (user.username for user in self.users_fav)
+                "favorite_of_users": [user.username for user in self.users_fav]
             }
